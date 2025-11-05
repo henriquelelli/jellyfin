@@ -8,7 +8,7 @@ services:
     restart: always
     environment:
       - PUID=${PUID}  
-      - PGID=${PGID}  
+      - PGID=${PGID}
       - TZ=${TZ}      
     ports:
       # Expõe o Jellyfin na porta 8096
