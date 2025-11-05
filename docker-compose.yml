@@ -1,0 +1,30 @@
+# /home/hcdev/jellyfin/docker-compose.yml
+
+version: '3.7'
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin_service
+    restart: always
+    environment:
+      - PUID=${PUID}  
+      - PGID=${PGID}  
+      - TZ=${TZ}      
+    ports:
+      # Expõe o Jellyfin na porta 8096
+      - "8096:8096"
+    volumes:
+      # 1. Onde o Jellyfin salva a configuração dele (biblioteca, usuários, etc.)
+      - jellyfin_config:/config
+      
+      # 2. Onde o Jellyfin vai LER suas mídias
+      #    A pasta /home/hcdev/media (no seu servidor)
+      #    vai aparecer como /media (dentro do contêiner)
+      - /home/hcdev/media:/media
+    devices:
+      # O "pulo do gato": Passa a sua placa de vídeo (Intel Quick Sync)
+      # para dentro do contêiner, para transcodificação de hardware.
+      - /dev/dri:/dev/dri
+
+volumes:
+  jellyfin_config:
